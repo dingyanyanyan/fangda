@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			
+			div{width:300px;height:300px;border:1px solid peru;float:left;position: relative;}
+			#div1 img{width:300px;height:300px;}
+			#div1 #mask{width:100px;height:100px;background:plum;opacity:0.5;filter:alpha(opacity:50);position:absolute;top:0;left:0;display: none;}
+			
+			#div2{overflow: hidden;display: none;}
+			#div2 img{width:900px;height:900px;position: absolute;top:0;left:0;}
+		</style>
+	</head>
+	<body>
+		
+		<div id="div1">
+			<img src="chanpin_4.png" alt="" />
+			<span id="mask"></span>
+		</div>
+		<div id="div2">
+			<img src="chanpin_4.png" alt="" id="img2"/>
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		
+		window.onload = function(){
+			
+			//获取元素
+			var oDiv1=document.getElementById('div1');
+			var oM=document.getElementById('mask');
+			var oDiv2=document.getElementById('div2');
+			var oImg=document.getElementById('img2');
+			
+			oDiv1.onmouseover = function(){
+				oM.style.display = "block",
+				oDiv2.style.display = "block";
+			};
+			
+			oDiv1.onmouseout = function(){
+				oM.style.display = "none";
+				oDiv2.style.display = "none";
+			};
+			
+			oDiv1.onmousemove = function(ev){
+				var oEvent = ev || event;
+				
+				var l = oEvent.clientX-oM.offsetWidth/2;
+				var t = oEvent.clientY-oM.offsetHeight/2;
+				
+				if(l < 0){
+					l = 0
+				}
+				if(l > oDiv1.offsetWidth - oM.offsetWidth){
+					l = oDiv1.offsetWidth - oM.offsetWidth;
+				}
+				if(t < 0){
+					t = 0
+				};
+				if(t > oDiv1.offsetHeight - oM.offsetHeight){
+					t = oDiv1.offsetHeight - oM.offsetHeight;
+				}
+				
+				oM.style.left = l+"px";
+				oM.style.top = t+"px";
+				
+				oImg.style.left = -l/(oDiv1.offsetWidth-oM.offsetWidth)*(oImg.offsetWidth-oDiv2.offsetWidth)+"px";
+				oImg.style.top = -t/(oDiv1.offsetHeight-oM.offsetHeight)*(oImg.offsetHeight-oDiv2.offsetHeight)+"px";
+				
+			};
+			
+			
+						
+		};
+		
+	</script>
+</html>
